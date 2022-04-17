@@ -3,10 +3,12 @@ const terminalInput = document.getElementById('terminal-input');
 const optionsList = document.getElementById('options-list');
 const kbsound = document.getElementById('audio');
 
-// let requiredState = {};
+
+
 let state = {};
 
 function welcomeScreen() {
+    terminalInput.value = "";
     clearScreen();
     state = {};
     setTimeout(showScreen(1), 1000);
@@ -24,7 +26,7 @@ function showScreen(textScreenIndex) {
             optionElement.innerText = `--${option.answer}--`;
             optionElement.classList.add('option');
             optionsList.appendChild(optionElement); 
-            enterOption(textScreen, option);  
+            enterOption(textScreen);  
         }
     })
 }
@@ -37,15 +39,16 @@ function showOption(option) {
 
 
 
-function enterOption(textScreen, option) {
+function enterOption(textScreen) {
     terminalInput.addEventListener('keyup', (e) => {
         if (e.code === "Enter") {
-        if (showOption(option)) {
+        if (terminalInput.value != '') {
         kbsound.play();
         const selectedOption = textScreen.options.find(option => option.answer == terminalInput.value.toLowerCase());
+        if (showOption(selectedOption)) {
         selectOption(selectedOption);
         console.log(state);
-    }}});
+    }}}});
 }
 
 function selectOption(option) {
@@ -54,9 +57,15 @@ function selectOption(option) {
         return welcomeScreen();
     }
     state = Object.assign(state, option.setState);
-    setTimeout(showScreen(nextTextScreenId), 1000);
+    if (state.virus != true) {
+    showScreen(nextTextScreenId);
     terminalInput.value = "";
-}
+    } else {
+        terminalInput.value = "";
+        showScreen(9);
+    }
+    }
+
 
 function clearScreen() {
     terminalQuest.innerText = "";
@@ -73,7 +82,6 @@ const textScreens = [
             {
                 answer: 'start',
                 nextText: 2,
-                setState: {acess: true},
                 
             },
             {
@@ -90,22 +98,22 @@ const textScreens = [
             {
                 answer: 'help',
                 nextText: 3,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'great computer launch me some games!',
                 nextText: 4,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'porn',
-                requiredState: (currentState) => currentState.virusHacked,
+                requiredState: (currentState) => currentState.hacker,
                 nextText: 11,
             },
             {
                 answer: 'reset',
                 nextText: -1,
-                requiredState: (currentState) => currentState.acess,
+                
             },
         ]
     },
@@ -119,17 +127,17 @@ const textScreens = [
             {
                 answer: 'scan',
                 nextText: 5,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'reset',
                 nextText: -1,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'kill all humans',
                 nextText: 6,
-                requiredState: (currentState) => currentState.acess,
+                
             },
         ],
     },
@@ -140,12 +148,11 @@ const textScreens = [
             {
                 answer: 'menu',
                 nextText: 2,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'please(use speechcraft 100%)',
                 nextText: 12,
-                setState: {acess: false},
                 requiredState: (currentState) => currentState.virusHacked,
             }
         ]
@@ -157,7 +164,7 @@ const textScreens = [
             {
                 answer: 'scan faster!',
                 nextText: 7,
-                requiredState: (currentState) => currentState.acess,
+                
             },
         ],
     },
@@ -168,7 +175,7 @@ const textScreens = [
             {
                 answer: 'reset',
                 nextText: -1,
-                requiredState: (currentState) => currentState.acess,
+                
             }
         ],
     },
@@ -185,13 +192,13 @@ const textScreens = [
             {
                 answer: 'open kitties.jpg',
                 nextText: 8,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'open do_not_open.exe',
-                setState: {acess: false},
+                setState: {virus: true},
                 nextText: 9,
-                requiredState: (currentState) => currentState.acess,
+                
             }
         ]
     },
@@ -204,13 +211,13 @@ const textScreens = [
             {
                 answer: 'files',
                 nextText: 7,
-                requiredState: (currentState) => currentState.acess,
+                
             },
             {
                 answer: 'save',
                 setState: { kitties: true },
                 nextText: 7,
-                requiredState: (currentState) => currentState.acess,
+                
             }
         ]
     },
@@ -222,14 +229,14 @@ const textScreens = [
         options: [
             {
                 answer: 'reset',
-                requiredState: (currentState) => currentState.acess,
                 nextText: -1,
                 
             },
             {
-                setState: {acess: true, virusHacked: true},
                 answer: 'use kitties.jpg antivirus',
                 requiredState: (currentState) => currentState.kitties,
+                requiredState: (currentState) => currentState.virus,
+                setState: { hacker: true , virus: false},
                 nextText: 10,
             },
         ]
@@ -241,7 +248,6 @@ const textScreens = [
         options: [
             {
                 answer: 'menu',
-                requiredState: (currentState) => currentState.acess,
                 nextText: 2,
             }
         ]
@@ -254,7 +260,6 @@ const textScreens = [
             {
                 answer: 'menu',
                 nextText: 2,
-
             }
         ]
     },
