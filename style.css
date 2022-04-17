@@ -35,7 +35,6 @@ body {
     overflow: hidden;
     background-color: #000;
     color: green;
-    text-shadow: 3px 3px 2px rgb(28, 148, 28);
     font-family: "Press Start 2P";
 }
 
@@ -50,21 +49,24 @@ body {
 .terminal__logo {
     margin: 20px 0px 20px 0px;
     font-size: 50px;
+    color: green;
+    background-color: black;
+    text-shadow: 0px 0px 2px rgb(28, 148, 28);
     text-align: center;
     transform: translateY(700%);
+    transition: all 0.2s ease 0s;
+}
+
+.terminal__logo:hover {
+    color: rgb(58, 215, 58);
+    text-shadow: 5px 5px 20px rgb(28, 148, 28);
+
 }
 
 .terminal__logo-launched {
     animation: floating 1s ease-out forwards  0s;
 }
-.start__button  {
-    position: relative;
-    top: 30vh;
-    opacity: 0;
-    width: 400px;
-    height: 150px;
 
-}
 .terminal__container {
     display: flex;
     flex-direction: row;
@@ -158,8 +160,10 @@ body {
 @keyframes floating {
     from {
         transform: translateY(700%);
+        text-shadow: 0px 0px 2px rgb(28, 148, 28);
     }
     to {
         transform: translateY(0%);
+        text-shadow: 5px 5px 2px rgb(28, 148, 28);
     }
 }

@@ -16,7 +16,6 @@ function launchTerminal () {
         terminalBody.classList.add("terminal-wrap-launched");
         terminalLogo.classList.add("terminal__logo-launched");
         setInterval(welcomeScreen(), 2000);
-        startButton.remove();
     })
 }
 
@@ -24,7 +23,7 @@ function welcomeScreen() {
     terminalInput.value = "";
     clearScreen();
     state = {};
-    setTimeout(showScreen(1), 1000);
+    showScreen(1);
 }
 
 function showScreen(textScreenIndex) {
@@ -39,7 +38,7 @@ function showScreen(textScreenIndex) {
             optionElement.innerText = `--${option.answer}--`;
             optionElement.classList.add('option');
             optionsList.appendChild(optionElement); 
-            enterOption(option);  
+            enterOption(option);
         }
     })
 }
@@ -55,13 +54,11 @@ function showOption(option) {
 function enterOption(option) {
     terminalInput.addEventListener('keyup', (e) => {
         if (e.code === "Enter") {
-        if (terminalInput.value != '') {
-        kbsound.play();
-        if (terminalInput.value.toLowerCase() === option.answer) {
-        selectOption(option);
-        console.log(state);
+            kbsound.play();
+                if (terminalInput.value.toLowerCase() === option.answer) {
+                    selectOption(option);
         }
-    }}})}
+}})}
 
 
 function selectOption(option) {
@@ -94,13 +91,11 @@ const textScreens = [
         options: [
             {
                 answer: 'start',
-                nextText: 2,
-                
+                nextText: 2, 
             },
             {
                 answer: 'reset',
                 nextText: -1,
-                
             },
         ]
     },
@@ -111,12 +106,10 @@ const textScreens = [
             {
                 answer: 'help',
                 nextText: 3,
-                
             },
             {
                 answer: 'great computer launch me some games!',
                 nextText: 4,
-                
             },
             {
                 answer: 'porn',
@@ -126,7 +119,6 @@ const textScreens = [
             {
                 answer: 'reset',
                 nextText: -1,
-                
             },
         ]
     },
@@ -140,17 +132,14 @@ const textScreens = [
             {
                 answer: 'scan',
                 nextText: 5,
-                
             },
             {
                 answer: 'reset',
                 nextText: -1,
-                
             },
             {
                 answer: 'kill all humans',
                 nextText: 6,
-                
             },
         ],
     },
@@ -161,7 +150,6 @@ const textScreens = [
             {
                 answer: 'menu',
                 nextText: 2,
-                
             },
             {
                 answer: 'please(use speechcraft 100%)',
@@ -177,7 +165,6 @@ const textScreens = [
             {
                 answer: 'scan faster!',
                 nextText: 7,
-                
             },
         ],
     },
@@ -188,7 +175,6 @@ const textScreens = [
             {
                 answer: 'reset',
                 nextText: -1,
-                
             }
         ],
     },
@@ -205,13 +191,12 @@ const textScreens = [
             {
                 answer: 'open kitties.jpg',
                 nextText: 8,
-                
+                setState: {kitties: true},
             },
             {
                 answer: 'open do_not_open.exe',
                 setState: {virus: true},
                 nextText: 9,
-                
             }
         ]
     },
@@ -222,15 +207,13 @@ const textScreens = [
         `,
         options: [
             {
-                answer: 'files',
+                answer: 'return',
                 nextText: 7,
-                
             },
             {
                 answer: 'save',
                 setState: { kitties: true },
                 nextText: 7,
-                
             }
         ]
     },
@@ -241,14 +224,12 @@ const textScreens = [
                 terminal self-explode starts now!`,
         options: [
             {
-                answer: 'reset',
-                nextText: -1,
-                
+                answer: 'exit',
+                nextText: 2,
             },
             {
                 answer: 'use kitties.jpg antivirus',
                 requiredState: (currentState) => currentState.kitties,
-                requiredState: (currentState) => currentState.virus,
                 setState: { hacker: true , virus: false},
                 nextText: 10,
             },
