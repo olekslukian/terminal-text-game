@@ -64,7 +64,7 @@ body {
 }
 
 .terminal__logo-launched {
-    animation: floating 1s ease-out forwards  0s;
+    animation: floating 1s linear forwards  0s;
 }
 
 .terminal__container {
@@ -92,7 +92,7 @@ body {
 }
 
 .terminal-wrap-launched {
-    animation: launching 1.5s linear forwards 0s;
+    animation: launching 1.0s ease-in forwards 0s;
 }
 
 .terminal-text {
@@ -106,8 +106,10 @@ body {
     flex-direction: column;
     animation: text-animation 0.5s ease 0s;
 }
-.terminal-quest p {
-
+.terminal__explosion {
+    font-size: 150px;
+    text-align: center;
+    transform: translateY(40vh)
 }
 .terminal-quest img {
     margin: 0px 0px 0px 150px;
