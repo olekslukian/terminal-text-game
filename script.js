@@ -199,11 +199,18 @@ const textScreens = [
                 acess: 2,
             },
             {
+                answer: `files`,
+                nextText: 32,
+                acess: 2,
+                requiredState: (currentState) => currentState.hacker,
+            },
+            {
                 answer: 'reset',
                 nextText: 1,
                 acess: 2,
                 changeAcess: 1,
             },
+            
         ]
     },
     {
@@ -247,7 +254,6 @@ const textScreens = [
                 acess: 4,
                 setState: {arm: true,
                             life: true,
-                            mind: true,
                             pneumonia: false,
                             armInjury: false,
                             skeletonBone: false,
@@ -354,7 +360,7 @@ const textScreens = [
     {
         id: 11,
         text: `Please, visit my GitHub! <br>
-        <a href="https://github.com/Dethkrist">GITHUB</a>`,
+        <a href="https://github.com/Dethkrist" target="_blank">GITHUB</a>`,
         options: [
             {
                 answer: 'menu',
@@ -466,7 +472,7 @@ const textScreens = [
         text: `Castle seems very old and abandoned, but you hear a something like ritual chants afar, in front of you, you see a skeleton with a warm coat`,
         options: [
             {
-                answer: `pickup the coat and go`,
+                answer: `pick up the coat and go`,
                 nextText: 19,
                 acess: 18,
                 setState: {life: true, pneumonia: false, coat: true},
@@ -703,6 +709,134 @@ const textScreens = [
                     sword: false,
                     completedQuest: true,
                 },
+            }
+        ]
+    },
+    {
+        id: 32,
+        text: 'error! part of files is missing, trying to restore....',
+        options:[
+            {
+                answer: `open readthisjohn.txt`,
+                nextText: 33,
+                acess: 32,
+                requiredState: (currentState) => currentState.hacker,
+            },
+            {
+                answer: `open mynewraptext.txt`,
+                nextText: 34,
+                acess: 32,
+                requiredState: (currentState) => currentState.completedQuest,
+            },
+            {
+                answer: `open buy_this_mixture.txt`,
+                nextText: 35,
+                acess: 32,
+                requiredState: (currentState) => currentState.hacker,
+            },
+            {
+                answer: `open screwyou.txt`,
+                nextText: 36,
+                acess: 32,
+                requiredState: (currentState) => currentState.completedQuest,
+            },
+            {
+                answer: `open easy_method_to_earn_money.txt`,
+                nextText: 37,
+                acess: 32,
+                requiredState: (currentState) => currentState.completedQuest,
+            },
+            {
+                answer: `return`,
+                nextText: 2,
+                acess: 32,
+            }
+        ]
+    },
+    {
+        id: 33,
+        text: `readthisjohn.txt<br><br>
+                John! How many times i've told you to flush the toilet?
+                Are you kidding me, john? We're living 10 years together, and you still didn't learn something new? And yesterday? Yesterday yo've eaten my sandwich! My vegan sandwich!<br>
+                I hate you, john!<br>
+                Your david.`,
+        options: [
+            {
+                answer: `return`,
+                nextText: 32,
+                acess: 33,
+            }
+        ]
+    },
+    {
+        id: 34,
+        text: `
+        Every day my bag<br>
+        I guarded my bag<br>
+        All ones life<br>
+        I guarded the bag<br>
+        All ones life<br>
+        I guarded the bag<br>
+        On the Oka and in the Kuban<br>
+        Spin all kinds of shit<br>
+        loves our people<br>
+        any shit<br>
+        loves our people<br>
+        any shit<br>
+        No windows, no doors<br>
+        And the ass is full of cucumbers<br>
+        Our country<br>
+        Ass full of cucumbers<br>
+        Every country<br>
+        Ass full of cucumbers<br>
+        Only one in my pocket<br>`,
+        options: [
+            {
+                answer: `return`,
+                nextText: 32,
+                acess: 34,
+            }
+        ]
+    },
+    {
+        id: 35,
+        text: `buy_this_mixture.txt<br><br>
+                enlarge your toes using this mixture 
+                made of very natural ingredients,
+                like soil and water<br>
+                girls like big toes!<br>
+                Buy: --deleted--`,
+        options: [
+            {
+                answer: `return`,
+                nextText: 32,
+                acess: 35,
+            },
+        ]
+    },
+    {
+        id: 36,
+        text: `screwyou.txt<br><br>
+                screw you peter! Curse the day, when you told me about elden ring! i hate you! i can't sleep! i am bald now and i have mental illness, tell me, tell me, please, how to kill freaking malenia?????????? i've broke all keyboards in my house`,
+        options: [
+            {
+                answer: `return`,
+                nextText: 32,
+                acess: 36,
+            }
+        ]
+    },
+    {
+        id: 37,
+        text: `easy_method_to_earn_money.txt<br><br>
+                Hey bro, i've found a best way to earn money!<br>
+                Listen, you just need to find a job<br>
+                and earn money!<br>`,
+        options: [
+            {
+                answer: `return`,
+                nextText: 32,
+                acess: 37,
             }
         ]
     }

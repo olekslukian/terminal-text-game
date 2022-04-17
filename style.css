@@ -55,11 +55,13 @@ body {
     text-align: center;
     transform: translateY(700%);
     transition: all 0.2s ease 0s;
+    animation: logo-off 2s ease-in-out 0s infinite alternate;
 }
 
 .terminal__logo:hover {
     color: rgb(58, 215, 58);
     text-shadow: 5px 5px 20px rgb(28, 148, 28);
+    /* animation: none; */
 
 }
 
@@ -176,6 +178,18 @@ body {
     to {
         opacity: 1;
         transform: scale(100%);
+    }
+}
+
+@keyframes logo-off {
+    from {
+        color: green;
+        text-shadow: 0px 0px 2px rgb(31, 164, 31);
+        
+    }
+    to {
+        color: rgb(31, 164, 31);
+        text-shadow: 0px 0px 30px rgb(31, 164, 31);
     }
 }
 
