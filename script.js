@@ -1,11 +1,24 @@
 const terminalQuest = document.getElementById('terminalQuest');
+const startButton = document.getElementById('start-button');
 const terminalInput = document.getElementById('terminal-input');
 const optionsList = document.getElementById('options-list');
 const kbsound = document.getElementById('audio');
 
 
 
+const terminalBody = document.querySelector('.terminal-wrap');
+const terminalLogo = document.querySelector('.terminal__logo');
+
 let state = {};
+
+function launchTerminal () {
+    startButton.addEventListener('click', () => {
+        terminalBody.classList.add("terminal-wrap-launched");
+        terminalLogo.classList.add("terminal__logo-launched");
+        setInterval(welcomeScreen(), 2000);
+        startButton.remove();
+    })
+}
 
 function welcomeScreen() {
     terminalInput.value = "";
@@ -26,7 +39,7 @@ function showScreen(textScreenIndex) {
             optionElement.innerText = `--${option.answer}--`;
             optionElement.classList.add('option');
             optionsList.appendChild(optionElement); 
-            enterOption(textScreen);  
+            enterOption(option);  
         }
     })
 }
@@ -39,17 +52,17 @@ function showOption(option) {
 
 
 
-function enterOption(textScreen) {
+function enterOption(option) {
     terminalInput.addEventListener('keyup', (e) => {
         if (e.code === "Enter") {
         if (terminalInput.value != '') {
         kbsound.play();
-        const selectedOption = textScreen.options.find(option => option.answer == terminalInput.value.toLowerCase());
-        if (showOption(selectedOption)) {
-        selectOption(selectedOption);
+        if (terminalInput.value.toLowerCase() === option.answer) {
+        selectOption(option);
         console.log(state);
-    }}}});
-}
+        }
+    }}})}
+
 
 function selectOption(option) {
     const nextTextScreenId = option.nextText;
@@ -77,7 +90,7 @@ function clearScreen() {
 const textScreens = [
     {
         id: 1,
-        text: '<p>Welcome, friend! Please, type "start" to start work!</p>',
+        text: 'Welcome, friend! Please, type "start" to start work!',
         options: [
             {
                 answer: 'start',
@@ -153,7 +166,7 @@ const textScreens = [
             {
                 answer: 'please(use speechcraft 100%)',
                 nextText: 12,
-                requiredState: (currentState) => currentState.virusHacked,
+                requiredState: (currentState) => currentState.hacker,
             }
         ]
     },
@@ -287,4 +300,4 @@ const textScreens = [
 
 ]
 
-welcomeScreen();
+launchTerminal();
