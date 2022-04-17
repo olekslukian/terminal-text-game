@@ -1,0 +1,285 @@
+const terminalQuest = document.getElementById('terminalQuest');
+const terminalInput = document.getElementById('terminal-input');
+const optionsList = document.getElementById('options-list');
+const kbsound = document.getElementById('audio');
+
+// let requiredState = {};
+let state = {};
+
+function welcomeScreen() {
+    clearScreen();
+    state = {};
+    setTimeout(showScreen(1), 1000);
+}
+
+function showScreen(textScreenIndex) {
+    const textScreen = textScreens.find(textScreen => textScreen.id === textScreenIndex);
+    terminalQuest.innerHTML = textScreen.text;
+    while (optionsList.firstChild) {
+        optionsList.removeChild(optionsList.firstChild);
+    }
+    textScreen.options.forEach(option => {
+        if(showOption(option)) {
+            const optionElement = document.createElement('li');
+            optionElement.innerText = `--${option.answer}--`;
+            optionElement.classList.add('option');
+            optionsList.appendChild(optionElement); 
+            enterOption(textScreen, option);  
+        }
+    })
+}
+
+
+
+function showOption(option) {
+    return option.requiredState == null || option.requiredState(state);
+}
+
+
+
+function enterOption(textScreen, option) {
+    terminalInput.addEventListener('keyup', (e) => {
+        if (e.code === "Enter") {
+        if (showOption(option)) {
+        kbsound.play();
+        const selectedOption = textScreen.options.find(option => option.answer == terminalInput.value.toLowerCase());
+        selectOption(selectedOption);
+        console.log(state);
+    }}});
+}
+
+function selectOption(option) {
+    const nextTextScreenId = option.nextText;
+    if (nextTextScreenId <= 0) {
+        return welcomeScreen();
+    }
+    state = Object.assign(state, option.setState);
+    setTimeout(showScreen(nextTextScreenId), 1000);
+    terminalInput.value = "";
+}
+
+function clearScreen() {
+    terminalQuest.innerText = "";
+}
+
+
+
+
+const textScreens = [
+    {
+        id: 1,
+        text: '<p>Welcome, friend! Please, type "start" to start work!</p>',
+        options: [
+            {
+                answer: 'start',
+                nextText: 2,
+                setState: {acess: true},
+                
+            },
+            {
+                answer: 'reset',
+                nextText: -1,
+                
+            },
+        ]
+    },
+    {
+        id: 2,
+        text: 'Systems running...',
+        options: [
+            {
+                answer: 'help',
+                nextText: 3,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'great computer launch me some games!',
+                nextText: 4,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'porn',
+                requiredState: (currentState) => currentState.virusHacked,
+                nextText: 11,
+            },
+            {
+                answer: 'reset',
+                nextText: -1,
+                requiredState: (currentState) => currentState.acess,
+            },
+        ]
+    },
+    {
+        id: 3,
+        text: `~~~~~~~HELP~~~~~~~<br>
+            type "scan" to check files<br>
+            type "reset" to reset system<br>
+            type "kill all humans" to kill all humans<br>`,
+        options: [
+            {
+                answer: 'scan',
+                nextText: 5,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'reset',
+                nextText: -1,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'kill all humans',
+                nextText: 6,
+                requiredState: (currentState) => currentState.acess,
+            },
+        ],
+    },
+    {
+        id: 4,
+        text: `Big boys and girls don't play games!`,
+        options: [
+            {
+                answer: 'menu',
+                nextText: 2,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'please(use speechcraft 100%)',
+                nextText: 12,
+                setState: {acess: false},
+                requiredState: (currentState) => currentState.virusHacked,
+            }
+        ]
+    },
+    {
+        id: 5,
+        text: `Scanning...0%`,
+        options: [
+            {
+                answer: 'scan faster!',
+                nextText: 7,
+                requiredState: (currentState) => currentState.acess,
+            },
+        ],
+    },
+    {
+        id: 6,
+        text: "Congratulations! All humans were killed! Also, you're dead too!",
+        options: [
+            {
+                answer: 'reset',
+                nextText: -1,
+                requiredState: (currentState) => currentState.acess,
+            }
+        ],
+    },
+    {
+        id: 7,
+        text: `Shut up! I'm scanning!<br>
+        Scanned..... 100%<br>
+
+        Found files:<br> 
+        DO_NOT_OPEN.exe<br>
+        Kitties.jpg<br>
+        `,
+        options: [
+            {
+                answer: 'open kitties.jpg',
+                nextText: 8,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'open do_not_open.exe',
+                setState: {acess: false},
+                nextText: 9,
+                requiredState: (currentState) => currentState.acess,
+            }
+        ]
+    },
+    {
+        id: 8,
+        text: `
+        <img src="img/kitties.jpg" alt="kitties">
+        `,
+        options: [
+            {
+                answer: 'files',
+                nextText: 7,
+                requiredState: (currentState) => currentState.acess,
+            },
+            {
+                answer: 'save',
+                setState: { kitties: true },
+                nextText: 7,
+                requiredState: (currentState) => currentState.acess,
+            }
+        ]
+    },
+    {
+        id: 9,
+        text: `System alert!!!<br>
+                Undefined file!<br>
+                terminal self-explode starts now!`,
+        options: [
+            {
+                answer: 'reset',
+                requiredState: (currentState) => currentState.acess,
+                nextText: -1,
+                
+            },
+            {
+                setState: {acess: true, virusHacked: true},
+                answer: 'use kitties.jpg antivirus',
+                requiredState: (currentState) => currentState.kitties,
+                nextText: 10,
+            },
+        ]
+    },
+    {
+        id: 10,
+        text: `Systems are working!<br>
+                Access restored!<br>`,
+        options: [
+            {
+                answer: 'menu',
+                requiredState: (currentState) => currentState.acess,
+                nextText: 2,
+            }
+        ]
+    },
+    {
+        id: 11,
+        text: `Please, visit my GitHub! <br>
+        <a href="https://github.com/Dethkrist">GITHUB</a>`,
+        options: [
+            {
+                answer: 'menu',
+                nextText: 2,
+
+            }
+        ]
+    },
+    {
+        id: 12,
+        text: `Okay, you woke up in a dirty dungeon, you feel smell of rats and mossy cobblestone<br>
+                in your front side you see very old wooden door<br>
+                You don't have anything`,
+        options: [
+            {
+                answer: 'look around',
+                nextText: 13,
+            },
+            {
+                answer: 'try to break the door',
+                nextText: 14,
+            }
+        ]
+    },
+    {
+        id: 13,
+        text: 'Looking around you '
+    }
+    
+
+]
+
+welcomeScreen();
