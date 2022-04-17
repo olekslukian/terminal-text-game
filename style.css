@@ -122,9 +122,29 @@ body {
 }
 
 
+
+.password__game {
+    font-size: 50px;
+    text-align: center;
+    transform: translateY(280px);
+    z-index: 2;
+}
+
 .options__list {
     margin: 100px 0px 0px 0px;
 }
+
+.password__hint {
+    font-size: 50px;
+    color: green;
+    text-align: center;
+    transform: translateY(130px);
+    text-shadow: 0px 0px 15px green;
+    z-index: 1;
+    animation: hint-blinking 1s linear infinite alternate 0s;
+}
+
+
 .option {
 }
 .option:not(:last-child) {
@@ -167,5 +187,14 @@ body {
     to {
         transform: translateY(0%);
         text-shadow: 5px 5px 2px rgb(28, 148, 28);
+    }
+}
+
+@keyframes hint-blinking {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.2;
     }
 }
