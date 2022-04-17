@@ -1,3 +1,10 @@
+// That code is hard to read, because i'm just started to learn javascript
+// I've tried to compact it, and and it's all, what i could do
+// If you have propositions how to better compact code, please tell me
+// I think it might be better in future to put all objects and texts to other file
+
+
+
 const terminalQuest = document.getElementById('terminalQuest');
 const startButton = document.getElementById('start-button');
 const terminalInput = document.getElementById('terminal-input');
@@ -6,7 +13,7 @@ const kbsound = document.getElementById('audio');
 const kbsoundOther = document.getElementById('audio2');
 
 
-
+// Tese constants are for starting animation
 const terminalBody = document.querySelector('.terminal-wrap');
 const terminalLogo = document.querySelector('.terminal__logo');
 
@@ -17,6 +24,9 @@ const terminalLogo = document.querySelector('.terminal__logo');
 let state = {};
 let acess = 0;
 
+//Launching terminal by clicking on the logo
+
+// Interval to have enough time to play animation
 function launchTerminal () {
     startButton.addEventListener('click', () => {
         terminalBody.classList.add("terminal-wrap-launched");
@@ -25,6 +35,9 @@ function launchTerminal () {
     })
 }
 
+
+//Welcome screen, i use "state" object to manipulate with quest story
+// At the start "state" object is empty
 function welcomeScreen() {
     terminalInput.value = "";
     terminalQuest.classList.remove('terminal__explosion');
@@ -35,6 +48,8 @@ function welcomeScreen() {
     
 }
 
+
+// Showing screen using screen Index, we divide terminal onto different "screens" objects
 function showScreen(textScreenIndex) {
     const textScreen = textScreens.find(textScreen => textScreen.id === textScreenIndex);
     terminalQuest.innerHTML = textScreen.text;
@@ -52,13 +67,14 @@ function showScreen(textScreenIndex) {
     })
 }
 
-
+// Checking states before showing new screen
+// In future here can be more branched and complicated structure
 
 function showOption(option) {
     return option.requiredState == null || option.requiredState(state);
 }
 
-
+//Function to manipulate with input form, and play sounds
 
 function enterOption(option) {
     terminalInput.addEventListener('keyup', (e) => {
@@ -70,6 +86,8 @@ function enterOption(option) {
         }
 }})}
 
+// Selecting option taking next screen id
+// and it's a something like gamemode changer
 
 function selectOption(option) {
     const nextTextScreenId = option.nextText;
@@ -89,6 +107,8 @@ function selectOption(option) {
     }
     }
 
+//I've made separate function to make a virus-event in terminal
+// Because it was hard to make it in another way
 
 function virusTimer(i) {
     if (state.virus == true) {
@@ -109,10 +129,10 @@ function virusTimer(i) {
 }
 }
 
-function clearScreen() {
-    terminalQuest.innerText = "";
-}
 
+//Here, i've made a "key system", because there was a probelem with input form,
+// Without it you could to enter commands from any screen, and rit ruins the game.
+// If you know better way, tell me, please
 
 function getAcess (option, setAcess) {
     if (acess === option.acess) {
@@ -121,7 +141,7 @@ function getAcess (option, setAcess) {
     }
 }
 
-
+//regular scramble function to make a password game inside a quest
 
 function scramble(a){
     a=a.split("");
@@ -132,6 +152,12 @@ function scramble(a){
     }
 
 
+
+// Yes, this looks scary and awful
+
+// I tried to make a password game using individual function,
+
+// Input mechanism i've copied here, to not to create confusing connections
 function passwordGame() {
     let passwords = ["cleric", "ritual", "desperation", "javascript"];
     let password = passwords[Math.floor(Math.random() * passwords.length)];
@@ -161,6 +187,8 @@ function passwordGame() {
 }
 
 
+//Here all quest objects
+// all screen codes, acess codes, etc.
 const textScreens = [
     {
         id: 1,
