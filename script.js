@@ -107,6 +107,10 @@ function selectOption(option) {
     }
     }
 
+function clearScreen() {
+    terminalQuest.innerHTML = '';
+}
+
 //I've made separate function to make a virus-event in terminal
 // Because it was hard to make it in another way
 
