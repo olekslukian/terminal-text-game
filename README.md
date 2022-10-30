@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
-This is a simple terminal-styled quest game made as a little project to learn javascript. Yes, code is not ideal.
+My first ever project, created on a first step of my jorney ad a developer
 -----------------------------------------------------------------------------
 To play this game, just download all files, extract, and launch index.html.
 
